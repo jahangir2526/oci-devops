@@ -69,15 +69,19 @@ $ git push origin main
 
 ### Create Build Pipeline
 
-```
-Steps Here
-```
+![image-build_stage1](image/build_stage1.png)
 
-### 4. Create Deployment Pipeline
+### 4. Deployment Pipeline (Add Artifacts)
 
-```
-Steps Here
-```
+**a) add artifacts**
+
+![image-deploy_image1](image/deploy_stage1.png)
+
+
+
+**b) Create deployment pipeline **
+
+![image-20210927074832654](image/deploy_stage2.png)
 
 ### 5. Create Trigger
 
