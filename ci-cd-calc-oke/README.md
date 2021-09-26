@@ -67,19 +67,19 @@ $ git push origin main
 
 ```
 
-### 1. Create local Image
-
-```
-$ docker build -t mycalc1 .
-```
-
-### 4. Deploy OKE Cluster
+### Create Build Pipeline
 
 ```
 Steps Here
 ```
 
-### 5. Deploy OKE Cluster
+### 4. Create Deployment Pipeline
+
+```
+Steps Here
+```
+
+### 5. Create Trigger
 
 ```
 Steps Here
@@ -96,49 +96,35 @@ OCI provides one-click cluster deployment and will take care of creation of VCN,
 ## **2. Set up OCI DevOps CICD Pipeline**
 
 ### a. Create Project
-
 ```
 Steps Here
 ```
-
 ### b. Create Code Repository
-
 ```
 Steps Here
 ```
-
 ### c. Create Artifacts
-
 ```
 Steps Here
 ```
-
 ### d. Create Environment
-
 ```
 Steps Here
 ```
-
 ### e. Create Deployment Pipeline
-
 ```
 Steps Here
 ```
-
 ### f. Create Build Pipeline
-
 ```
 Steps Here
 ```
-
 ### g. Create Trigger
-
 ```
 Steps Here
 ```
 
 ## **3. Trigger CICD Pipeline** 
-
 ```
 Steps Here
 ```
