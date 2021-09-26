@@ -3,16 +3,10 @@
 **Objective:**
 
 1. Build a CI/CD pipeline using OCI DevOps services
-
 2. Deploy in OKE
-
 3. Code changes and trigger the CI/CD
 
-   
-
 ##### In this project we shall use a simple vannila calculator app to build and deploy on OKE using Oracle DevOps services (CI/CD)
-
-
 
 ## Steps
 
@@ -37,27 +31,39 @@ docker login password (OCIR): <auth_token>
 
 ```
 
-### 1. Deploy OKE Cluster in OCI
+### 2. Deploy OKE Cluster in OCI
 
 ```
 a. Deploy OKE Cluster1 for Test/DEV/UAT environment
 b. Deploy OKE Cluster2 for Prod environment
 ```
 
-### 2. Create DevOps Project
+### 3. Create DevOps Project
 
 ```
 a. Create a Topic/Notification
 b. Create DevOps Project
-b. Enable Logging for the DevOps 
+c. Enable Logging for the DevOps 
+d. Create an Empty Code Repository -> Clone -> Copy http URL
 ```
 
-### 2. Create New Code Repo & Clone in Dev Machine
+### 2. Clone in Dev Machine
 
 ```
 ## Developer Machine; Make sure you have git and docker installed
-$ git clone
+
+## Clone OCI code repo to local dev machine # ref 3.d
+$ git clone <oci_code_repo_url>	# if prompted provide "git username", "git password"
+
+## Clone the calculator repo from github & copy contents  into above
 $ git clone https://github.com/jahangir2526/Vanilla-JavaScript-Calculator.git
+
+## Copy contents in to OCI code repo, push changes
+$ git add -A
+$ git config credential.helper store	## store the credentials
+$ git commit -m "initial commit"
+$ git remote -v	# to see the remote
+$ git push origin main
 
 ```
 
