@@ -1,0 +1,106 @@
+version: 0.1
+component: build
+timeoutInSeconds: 10000
+runAs: root
+shell: bash
+env:
+  exportedVariables:
+    - BUILDRUN_HASH
+  vaultVariables:
+    OCIRCRED: "ocid1.vaultsecret.oc1.iad.amaaaaaaxc7u3kia3caa2lvzwhxgjealv2gfqv6a6nwpea4qcafngfadmwaa"
+steps:
+  - type: Command
+    name: "Export BUILDRUN_HASH as variable"
+    timeoutInSeconds: 40
+    command: |
+      export BUILDRUN_HASH=`echo ${OCI_BUILD_RUN_ID} | rev | cut -c 1-7`
+      echo "BUILDRUN_HASH: " $BUILDRUN_HASH
+    onFailure:
+      - type: Command
+        command: |
+          echo "Failed to obtain BUILDRUN_HASH"
+        timeoutInSeconds: 400
+        runAs: root
+  # - type: Command
+  #   name: "Build Docker image for php"
+  #   command: |
+  #     docker build -t lhr.ocir.io/apaccpt01/php-adb:${BUILDRUN_HASH} php-adb/.
+  #     echo "Run PHP"
+  #     docker run -dit -p 9000:9000 --name php-adb lhr.ocir.io/apaccpt01/php-adb:${BUILDRUN_HASH}
+  #     echo "Run php-adb successfully"
+  #   onFailure:
+  #     - type: Command
+  #       command: |
+  #         echo "Failed to build Docker container for php"
+  #       timeoutInSeconds: 400
+  #       runAs: root
+  # - type: Command
+  #   name: "Run PHP"
+  #   command: |
+  #     echo "Login to OCIR"
+  #     docker login iad.ocir.io -u idxkccw2srke/oracleidentitycloudservice/jahangir.alam@oracle.com -p ${OCIRCRED}
+  #     echo "Run PHP"
+  #     docker run -dit -p 9000:9000 --name php-adb iad.ocir.io/idxkccw2srke/cloudnative-website1/php-adb:almuk65
+  #     echo "Run php-adb successfully"
+  #   onFailure:
+  #     - type: Command
+  #       command: |
+  #         echo "Failed to run php"
+  #       timeoutInSeconds: 400
+  #       runAs: root
+  
+  - type: Command
+    name: "Build Docker image for calculator"
+    command: |
+      docker build -t iad.ocir.io/idxkccw2srke/calc-practice1:${BUILDRUN_HASH} .
+      echo "Building image locally with tag: iad.ocir.io/idxkccw2srke/calc-practice1:${BUILDRUN_HASH}"
+      #docker run -dit -p 5000:5000 --name nginx-php --add-host=php:172.17.0.2 iad.ocir.io/idxkccw2srke/cloudnative-website1/nginx-php:${BUILDRUN_HASH}
+      # echo "Run nginx-php successfully"
+    onFailure:
+      - type: Command
+        command: |
+          echo "Failed to build Docker container for nginx"
+        timeoutInSeconds: 400
+        runAs: root
+  
+  # - type: Command
+  #   name: "Build Pa11y CI Container for web accessibility testing"
+  #   command: |
+  #     echo "Build Pa11y CI image"
+  #     docker build -t pally-test:latest pa11y-test/.
+  #     echo "Pa11y CI build completed"
+  #   onFailure:
+  #     - type: Command
+  #       command: |
+  #         echo "Failed to build Docker container for Pa11y"
+  #       timeoutInSeconds: 400
+  #       runAs: root
+#  - type: Command
+ #   name: "Execute accessibility test"
+ #   command: |
+ #     docker ps -a
+ #     docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nginx-php
+ #     docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-adb
+ #     echo "Execute Pa11y test"
+ #     docker run pally-test
+ #   onFailure:
+ #     - type: Command
+ #       command: |
+ #         echo "Accessibility Test Failed"
+ #       timeoutInSeconds: 400
+ #       runAs: root
+  - type: Command
+    name: "Push Image to OCIR"
+    command: |
+      echo "Login to OCIR"
+      docker login iad.ocir.io -u idxkccw2srke/oracleidentitycloudservice/jahangir.alam@oracle.com -p ${OCIRCRED}
+      echo "Pushing image to OCIR"
+      docker push iad.ocir.io/idxkccw2srke/calc-practice1:${BUILDRUN_HASH}
+      echo "Pushed image to OCIR"
+      # docker push lhr.ocir.io/apaccpt01/php-adb:${BUILDRUN_HASH}
+    onFailure:
+      - type: Command
+        command: |
+          echo "Failed to push images $BUILDRUN_HASH to OCIR"
+        timeoutInSeconds: 400
+        runAs: root
