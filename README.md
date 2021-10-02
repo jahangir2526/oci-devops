@@ -1,2 +1,2 @@
-# oci-devops
-multiple project using OCI DevOps services
+# This repo will contains OCI DevOps related contents
+
